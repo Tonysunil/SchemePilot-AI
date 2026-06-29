@@ -31,7 +31,10 @@ export default async function ChecklistPage() {
 
         <Card className="bg-white/5 border-white/10 backdrop-blur-xl mb-6">
           <CardContent className="p-4">
-            <form action={addChecklistItem} className="flex gap-2">
+            <form action={async (formData) => {
+              "use server";
+              await addChecklistItem(formData);
+            }} className="flex gap-2">
               <Input name="task" placeholder="Add a new requirement (e.g. Get Income Certificate)" className="bg-white/5 border-white/10" required />
               <Button type="submit" className="bg-indigo-600 hover:bg-indigo-700 text-white shrink-0">
                 <Plus className="w-4 h-4 mr-2" /> Add
@@ -49,14 +52,20 @@ export default async function ChecklistPage() {
             {items.map((item) => (
               <div key={item.id} className={`flex items-center justify-between p-4 rounded-xl border transition-all ${item.is_completed ? 'bg-white/5 border-white/5 opacity-50' : 'bg-white/10 border-white/10'}`}>
                 <div className="flex items-center gap-4 flex-1">
-                  <form action={toggleChecklistItem.bind(null, item.id, item.is_completed)}>
+                  <form action={async () => {
+                    "use server";
+                    await toggleChecklistItem(item.id, item.is_completed);
+                  }}>
                     <Button variant="ghost" size="icon" className={`rounded-full border w-6 h-6 p-0 flex items-center justify-center ${item.is_completed ? 'border-emerald-500 bg-emerald-500/20 text-emerald-500' : 'border-white/30 text-transparent hover:border-white/60'}`}>
                       {item.is_completed && <Check className="w-3 h-3" />}
                     </Button>
                   </form>
                   <span className={`text-sm md:text-base ${item.is_completed ? 'line-through text-muted-foreground' : 'text-white'}`}>{item.task}</span>
                 </div>
-                <form action={removeChecklistItem.bind(null, item.id)}>
+                <form action={async () => {
+                  "use server";
+                  await removeChecklistItem(item.id);
+                }}>
                   <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-red-400 shrink-0">
                     <Trash2 className="w-4 h-4" />
                   </Button>
