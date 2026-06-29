@@ -131,7 +131,10 @@ export default async function ProfilePage(props: { searchParams: Promise<{ updat
                       )}
                     </div>
                     <div className="flex items-center gap-2 w-full md:w-auto mt-4 md:mt-0">
-                      <form action={removeScheme.bind(null, scheme.id)} className="w-full md:w-auto">
+                      <form action={async () => {
+                        "use server";
+                        await removeScheme(scheme.id);
+                      }} className="w-full md:w-auto">
                         <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-red-400 w-full md:w-auto">
                           <Trash2 className="w-4 h-4" />
                         </Button>
