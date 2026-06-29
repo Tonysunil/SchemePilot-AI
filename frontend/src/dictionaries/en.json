@@ -1,0 +1,26 @@
+{
+  "header": {
+    "schemes": "Schemes",
+    "dashboard": "Dashboard",
+    "about": "About",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "greeting": "Hi, {name} 👋",
+    "question": "What would you like to do?",
+    "card_scholarships": "Scholarships",
+    "card_schemes": "Government Schemes",
+    "card_saved": "My Saved Schemes",
+    "card_checklist": "My Checklist",
+    "card_chat": "Ask AI",
+    "card_profile": "My Profile"
+  },
+  "landing": {
+    "badge": "Powered by Advanced Agentic AI",
+    "title": "Find the Right Government Scheme in Minutes",
+    "subtitle": "SchemePilot AI instantly matches you with the exact schemes you are eligible for.",
+    "cta": "Get Started Now",
+    "browse": "Browse Schemes"
+  }
+}
