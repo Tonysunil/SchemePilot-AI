@@ -73,6 +73,7 @@ export function SchemesClient({ schemes }: { schemes: any[] }) {
                 </CardContent>
                 <CardFooter className="flex gap-2">
                   <Dialog>
+                    {/* @ts-expect-error: UI library type mismatch for asChild */}
                     <DialogTrigger asChild>
                       <Button variant="outline" className="flex-1 border-white/20 text-foreground hover:bg-white/10">
                         Details
