@@ -5,5 +5,5 @@ python-dotenv
 langchain
 langchain-google-genai
 langgraph
-pinecone-client
-langchain-pinecone
+pinecone-client>=6.0.0
+langchain-pinecone>=0.2.13
