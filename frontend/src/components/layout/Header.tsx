@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { getDictionary } from '@/lib/dictionaries';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { MobileMenu } from './MobileMenu';
 
 export async function Header() {
   const supabase = await createClient();
@@ -54,10 +55,11 @@ export async function Header() {
               </form>
             </div>
           ) : (
-            <Link href="/login" className={cn(buttonVariants(), "bg-indigo-600 hover:bg-indigo-700 text-white rounded-full")}>
+            <Link href="/login" className={cn(buttonVariants(), "hidden sm:inline-flex bg-indigo-600 hover:bg-indigo-700 text-white rounded-full")}>
               {dict.header.login}
             </Link>
           )}
+          <MobileMenu isLoggedIn={!!user} dict={dict} signOutAction={signOut} />
         </div>
       </div>
     </header>
