@@ -7,4 +7,4 @@ os.chdir(os.path.join(os.path.dirname(__file__), "backend"))
 sys.path.insert(0, os.getcwd())
 
 # Now import the actual FastAPI app from the backend folder
-from main import app
+from backend.main import app
