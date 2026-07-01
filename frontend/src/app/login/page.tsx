@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Loader2, MailCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoginPage() {
@@ -18,6 +19,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -48,7 +50,7 @@ export default function LoginPage() {
           router.push('/dashboard/profile');
           router.refresh();
         } else {
-          setMessage("Registration successful! Please check your email to confirm your account.");
+          setShowConfirmDialog(true);
           // Clear form
           setFullName('');
           setPassword('');
@@ -170,6 +172,26 @@ export default function LoginPage() {
           </form>
         </Card>
       </motion.div>
+
+      <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader className="flex flex-col items-center sm:text-center">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+              <MailCheck className="h-6 w-6 text-primary" />
+            </div>
+            <DialogTitle className="text-2xl">Check your email</DialogTitle>
+            <DialogDescription className="text-base pt-2 text-center">
+              We've sent a confirmation link to <span className="font-medium text-foreground">{email}</span>. 
+              Please verify your email address to sign in.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center mt-6">
+            <Button onClick={() => setShowConfirmDialog(false)} className="w-full sm:w-auto px-8 bg-primary hover:bg-primary/90 text-primary-foreground">
+              Got it, thanks!
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
