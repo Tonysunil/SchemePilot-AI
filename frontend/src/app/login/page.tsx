@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { Loader2, MailCheck } from 'lucide-react';
+import { Loader2, MailCheck, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoginPage() {
@@ -20,6 +20,8 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -28,6 +30,19 @@ export default function LoginPage() {
     setIsLoading(true);
     setError(null);
     setMessage(null);
+
+    if (isForgotPassword) {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${location.origin}/auth/callback?next=/update-password`,
+      });
+      if (error) {
+        setError(error.message);
+      } else {
+        setMessage("Password reset instructions have been sent to your email.");
+      }
+      setIsLoading(false);
+      return;
+    }
 
     if (isSignUp) {
       // Handle Sign Up
@@ -86,10 +101,12 @@ export default function LoginPage() {
         <Card className="bg-card border shadow-sm">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold tracking-tight text-center">
-              {isSignUp ? 'Create an account' : 'Welcome back'}
+              {isForgotPassword ? 'Reset password' : isSignUp ? 'Create an account' : 'Welcome back'}
             </CardTitle>
             <CardDescription className="text-center text-muted-foreground">
-              {isSignUp 
+              {isForgotPassword
+                ? 'Enter your email address and we will send you instructions to reset your password.'
+                : isSignUp 
                 ? 'Enter your details to create your SchemePilot account' 
                 : 'Enter your email and password to access your account'
               }
@@ -137,36 +154,73 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  required 
-                  className="bg-background"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+              
+              {!isForgotPassword && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">Password</Label>
+                    {!isSignUp && (
+                      <button 
+                        type="button" 
+                        onClick={() => { setIsForgotPassword(true); setError(null); setMessage(null); }}
+                        className="text-sm font-medium text-primary hover:underline"
+                        disabled={isLoading}
+                      >
+                        Forgot password?
+                      </button>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <Input 
+                      id="password" 
+                      type={showPassword ? "text" : "password"} 
+                      required 
+                      className="bg-background pr-10"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
+              )}
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={isLoading}>
-                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : (isSignUp ? "Sign Up" : "Sign In")}
+                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : (isForgotPassword ? "Send reset instructions" : isSignUp ? "Sign Up" : "Sign In")}
               </Button>
               <div className="text-sm text-center text-muted-foreground">
-                {isSignUp ? "Already have an account? " : "Don't have an account? "}
-                <button 
-                  type="button" 
-                  onClick={() => {
-                    setIsSignUp(!isSignUp);
-                    setError(null);
-                    setMessage(null);
-                  }} 
-                  className="text-primary hover:underline font-medium" 
-                  disabled={isLoading}
-                >
-                  {isSignUp ? "Sign in" : "Sign up"}
-                </button>
+                {isForgotPassword ? (
+                  <button 
+                    type="button" 
+                    onClick={() => { setIsForgotPassword(false); setError(null); setMessage(null); }} 
+                    className="text-primary hover:underline font-medium"
+                    disabled={isLoading}
+                  >
+                    Back to login
+                  </button>
+                ) : (
+                  <>
+                    {isSignUp ? "Already have an account? " : "Don't have an account? "}
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setIsSignUp(!isSignUp);
+                        setError(null);
+                        setMessage(null);
+                      }} 
+                      className="text-primary hover:underline font-medium" 
+                      disabled={isLoading}
+                    >
+                      {isSignUp ? "Sign in" : "Sign up"}
+                    </button>
+                  </>
+                )}
               </div>
             </CardFooter>
           </form>
