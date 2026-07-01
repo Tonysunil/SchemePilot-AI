@@ -74,7 +74,7 @@ export function SchemeDetailsClient({ scheme }: { scheme: any }) {
                 <CardHeader>
                   <CardTitle className="flex items-center text-xl">
                     <CheckCircle2 className="mr-2 h-5 w-5 text-emerald-400" /> 
-                    Eligibility Criteria
+                    Eligibility
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-muted-foreground">
@@ -86,7 +86,7 @@ export function SchemeDetailsClient({ scheme }: { scheme: any }) {
                 <CardHeader>
                   <CardTitle className="flex items-center text-xl">
                     <FileText className="mr-2 h-5 w-5 text-blue-400" /> 
-                    Application Process
+                    Step-by-step application process
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-muted-foreground">
@@ -98,7 +98,7 @@ export function SchemeDetailsClient({ scheme }: { scheme: any }) {
             <div className="space-y-6">
               <Card className="bg-indigo-600/10 border-indigo-500/30">
                 <CardHeader>
-                  <CardTitle className="text-xl text-indigo-100">Key Benefits</CardTitle>
+                  <CardTitle className="text-xl text-indigo-100">Benefits</CardTitle>
                 </CardHeader>
                 <CardContent className="text-indigo-200 font-medium">
                   {scheme.benefits}
@@ -107,7 +107,7 @@ export function SchemeDetailsClient({ scheme }: { scheme: any }) {
 
               <Card className="bg-white/5 border-white/10">
                 <CardHeader>
-                  <CardTitle className="text-xl">Required Documents</CardTitle>
+                  <CardTitle className="text-xl">Required documents</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ul className="list-disc list-inside text-muted-foreground space-y-2 mb-6">
@@ -134,7 +134,7 @@ export function SchemeDetailsClient({ scheme }: { scheme: any }) {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center w-full p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors text-foreground font-medium"
                 >
-                  Official Website <ExternalLink className="ml-2 h-4 w-4 text-muted-foreground" />
+                  Official application link <ExternalLink className="ml-2 h-4 w-4 text-muted-foreground" />
                 </a>
               )}
             </div>
