@@ -33,6 +33,28 @@ export default function ChatPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Load chat history from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('schemepilot_chat_history');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      } catch (e) {
+        console.error("Failed to parse chat history");
+      }
+    }
+  }, []);
+
+  // Save chat history to localStorage whenever it changes
+  useEffect(() => {
+    if (messages.length > 1) { // Only save if there's more than just the initial greeting
+      localStorage.setItem('schemepilot_chat_history', JSON.stringify(messages));
+    }
+  }, [messages]);
+
   // Fetch user profile on load
   useEffect(() => {
     async function loadProfile() {
@@ -50,13 +72,14 @@ export default function ChatPage() {
         const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
         setUserProfile({ ...(data || {}), full_name: name });
         
-        // Update greeting message
+        // Update greeting message only if we don't have loaded history
         setMessages(prev => {
-          const newMsgs = [...prev];
-          if (newMsgs[0].id === '1' && name) {
+          if (prev.length === 1 && prev[0].id === '1' && name) {
+            const newMsgs = [...prev];
             newMsgs[0].content = `Namaste, ${name}! I am SchemePilot AI. I can help you find government schemes you are eligible for. Tell me a bit about yourself (e.g., your state, occupation, age, and family income).`;
+            return newMsgs;
           }
-          return newMsgs;
+          return prev;
         });
       }
     }
@@ -200,21 +223,25 @@ export default function ChatPage() {
       {/* Sidebar */}
       <div className={`border-r border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-0 opacity-0'} flex flex-col hidden md:flex`}>
         <div className="p-4 border-b border-white/10">
-          <Button variant="outline" className="w-full justify-start rounded-xl bg-white/5 border-white/10 hover:bg-white/10" onClick={() => setMessages([])}>
+          <Button 
+            variant="outline" 
+            className="w-full justify-start rounded-xl bg-white/5 border-white/10 hover:bg-white/10" 
+            onClick={() => {
+              setMessages([{
+                id: '1',
+                role: 'assistant',
+                content: 'Namaste! I am SchemePilot AI. Let\'s start a new conversation. How can I help you today?',
+              }]);
+              localStorage.removeItem('schemepilot_chat_history');
+            }}
+          >
             <Plus className="mr-2 h-4 w-4" />
             New Chat
           </Button>
         </div>
         <div className="flex-1 overflow-y-auto">
-          <div className="p-2 space-y-1">
-            <Button variant="ghost" className="w-full justify-start font-normal text-muted-foreground hover:text-foreground">
-              <MessageSquare className="mr-2 h-4 w-4" />
-              Student Scholarship
-            </Button>
-            <Button variant="ghost" className="w-full justify-start font-normal text-muted-foreground hover:text-foreground">
-              <MessageSquare className="mr-2 h-4 w-4" />
-              Farmer Subsidies
-            </Button>
+          <div className="p-4 text-center text-sm text-muted-foreground mt-4">
+            <p>Your current conversation is saved automatically.</p>
           </div>
         </div>
       </div>
