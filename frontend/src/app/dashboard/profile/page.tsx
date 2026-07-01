@@ -7,6 +7,7 @@ import { saveProfile } from '@/app/actions/profile';
 import { removeScheme } from '@/app/actions/dashboard';
 import { Save, CheckCircle2, Bookmark, Trash2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { ProfileFormClient } from '@/components/profile/ProfileFormClient';
 
 export default async function ProfilePage(props: { searchParams: Promise<{ updated?: string }> }) {
   const searchParams = await props.searchParams;
@@ -44,63 +45,7 @@ export default async function ProfilePage(props: { searchParams: Promise<{ updat
           </div>
         )}
 
-        <form action={saveProfile}>
-          <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
-            <CardHeader>
-              <CardTitle>Essential Information</CardTitle>
-              <CardDescription>Required fields to help the AI match you accurately.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="state">State *</Label>
-                  <Input id="state" name="state" placeholder="e.g. Maharashtra" required defaultValue={profile?.state || ''} className="bg-white/5 border-white/10" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="annual_income">Annual Family Income (₹) *</Label>
-                  <Input id="annual_income" name="annual_income" type="number" placeholder="e.g. 250000" required defaultValue={profile?.annual_income || ''} className="bg-white/5 border-white/10" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="education">Education Level *</Label>
-                  <Input id="education" name="education" placeholder="e.g. Undergraduate" required defaultValue={profile?.education || ''} className="bg-white/5 border-white/10" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="course">Course Name *</Label>
-                  <Input id="course" name="course" placeholder="e.g. B.Tech Computer Science" required defaultValue={profile?.course || ''} className="bg-white/5 border-white/10" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="year">Current Year of Study *</Label>
-                  <Input id="year" name="year" placeholder="e.g. 2nd Year" required defaultValue={profile?.year || ''} className="bg-white/5 border-white/10" />
-                </div>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-white/10">
-                <h3 className="text-lg font-medium mb-1">Optional Demographics</h3>
-                <p className="text-sm text-muted-foreground mb-6">Skip these if you prefer, but they unlock specialized schemes.</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category (Optional)</Label>
-                    <Input id="category" name="category" placeholder="e.g. General, OBC, SC, ST" defaultValue={profile?.category || ''} className="bg-white/5 border-white/10" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="gender">Gender (Optional)</Label>
-                    <Input id="gender" name="gender" placeholder="e.g. Male, Female, Other" defaultValue={profile?.gender || ''} className="bg-white/5 border-white/10" />
-                  </div>
-                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="disability">Disability (Optional)</Label>
-                    <Input id="disability" name="disability" placeholder="e.g. None, Visually Impaired" defaultValue={profile?.disability || ''} className="bg-white/5 border-white/10" />
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-end pt-6 border-t border-white/10 bg-white/5 rounded-b-xl">
-              <Button type="submit" className="bg-indigo-600 hover:bg-indigo-700 text-white w-full sm:w-auto">
-                <Save className="w-4 h-4 mr-2" />
-                {profile ? 'Update Profile' : 'Save Profile'}
-              </Button>
-            </CardFooter>
-          </Card>
-        </form>
+        <ProfileFormClient profile={profile} />
 
         <div className="mt-12">
           <div className="mb-6 flex items-center gap-3">
