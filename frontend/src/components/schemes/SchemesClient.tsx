@@ -73,11 +73,8 @@ export function SchemesClient({ schemes }: { schemes: any[] }) {
                 </CardContent>
                 <CardFooter className="flex gap-2">
                   <Dialog>
-                    {/* @ts-expect-error: UI library type mismatch for asChild */}
-                    <DialogTrigger asChild>
-                      <Button variant="outline" className="flex-1 border-white/20 text-foreground hover:bg-white/10">
-                        Details
-                      </Button>
+                    <DialogTrigger className={cn(buttonVariants({ variant: "outline" }), "flex-1 border-white/20 text-foreground hover:bg-white/10 cursor-pointer")}>
+                      Details
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[600px] bg-zinc-950 border-white/10 text-white">
                       <DialogHeader>
