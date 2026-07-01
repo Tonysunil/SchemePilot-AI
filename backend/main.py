@@ -250,10 +250,16 @@ async def analyze_profile_endpoint(req: ProfileAnalysisRequest):
     profile_str = json.dumps(prof, indent=2)
     role_str = prof.get('role', 'Citizen')
     
-    search_query = f"{role_str} schemes in {prof.get('state', 'India')}"
+    # Extract dynamic keywords to make Pinecone search highly specific
+    dyn_data = prof.get('dynamic_data', {})
+    dyn_keywords = " ".join([str(v) for v in dyn_data.values() if isinstance(v, str)])
+    
+    search_query = f"{role_str} {dyn_keywords} schemes in {prof.get('state', 'India')} for {prof.get('category', 'General')}"
+    
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-2")
     vectorstore = PineconeVectorStore(index_name="schemepilot-schemes", embedding=embeddings)
-    docs = vectorstore.similarity_search(search_query, k=15)
+    # Reduce k to 6: This drastically increases speed and cuts out irrelevant "noise" schemes
+    docs = vectorstore.similarity_search(search_query, k=6)
     context = "\n\n".join([doc.page_content for doc in docs])
 
     prompt = f"""You are an expert government scheme analyst. 
@@ -266,7 +272,8 @@ Evaluate the user's eligibility against these specific schemes:
 CRITICAL RULES:
 1. STRICT NUMERICAL CHECKING: If a scheme requires a minimum age (e.g., 60 years for a pension), and the user's age is less than that, they are STRICTLY INELIGIBLE. Do not recommend it.
 2. INCOME LIMITS: If a scheme has an income cap (e.g., < ₹2,00,000), compare it strictly against the user's annual_income.
-3. If the user's profile directly contradicts a core requirement (e.g., Student vs Farmer), they are INELIGIBLE.
+3. CONTRADICTIONS: If the user's profile directly contradicts a core requirement (e.g., Student vs Farmer), they are INELIGIBLE.
+4. RELEVANCE & SPEED: DO NOT suggest unnecessary schemes. Only put a scheme in "eligible" if it is an EXCELLENT match. Maximum 5 eligible schemes allowed.
 
 Respond STRICTLY with valid JSON. Do not use Markdown block syntax (```json). Just the raw JSON object.
 Format:
