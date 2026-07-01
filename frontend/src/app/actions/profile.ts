@@ -49,5 +49,5 @@ export async function saveProfile(formData: FormData) {
 
   revalidatePath('/dashboard/profile')
   revalidatePath('/chat')
-  redirect('/dashboard/profile?updated=true')
+  redirect('/dashboard/recommendations')
 }

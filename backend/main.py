@@ -43,6 +43,9 @@ class ChatRequest(BaseModel):
     user_profile: dict = {}
     language: str = "en"
 
+class ProfileAnalysisRequest(BaseModel):
+    user_profile: dict = {}
+
 # --- LangGraph State & Nodes ---
 class AgentState(TypedDict):
     input: str
@@ -234,6 +237,57 @@ async def chat_endpoint(req: ChatRequest):
         }
     except Exception as e:
         return {"reply": f"Error during AI processing: {str(e)}", "profile_extracted": {}}
+
+@app.post("/api/v1/analyze-profile")
+async def analyze_profile_endpoint(req: ProfileAnalysisRequest):
+    if not os.getenv("GEMINI_API_KEY"):
+        return {"error": "GEMINI_API_KEY is missing"}
+
+    prof = req.user_profile
+    if not prof:
+        return {"error": "Profile is empty"}
+
+    profile_str = json.dumps(prof, indent=2)
+    role_str = prof.get('role', 'Citizen')
+    
+    search_query = f"{role_str} schemes in {prof.get('state', 'India')}"
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-2")
+    vectorstore = PineconeVectorStore(index_name="schemepilot-schemes", embedding=embeddings)
+    docs = vectorstore.similarity_search(search_query, k=15)
+    context = "\n\n".join([doc.page_content for doc in docs])
+
+    prompt = f"""You are an expert government scheme analyst. 
+The user has the following profile:
+{profile_str}
+
+Evaluate the user's eligibility against these specific schemes:
+{context}
+
+Respond STRICTLY with valid JSON. Do not use Markdown block syntax (```json). Just the raw JSON object.
+Format:
+{{
+  "eligible": [
+    {{"title": "Scheme Name", "match_level": "High Match", "reasons": ["Reason 1", "Reason 2"]}}
+  ],
+  "needs_info": [
+    {{"title": "Scheme Name", "question": "What is your specific sub-caste or condition?"}}
+  ],
+  "ineligible": [
+    {{"title": "Scheme Name"}}
+  ]
+}}
+Only output the JSON. Evaluate strictly.
+"""
+    try:
+        response = llm.invoke([HumanMessage(content=prompt)])
+        content = response.content.strip()
+        if content.startswith("```json"):
+            content = content[7:]
+        if content.endswith("```"):
+            content = content[:-3]
+        return json.loads(content)
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.post("/api/v1/ocr")
 async def ocr_endpoint(file: UploadFile = File(...)):
