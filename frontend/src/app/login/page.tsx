@@ -8,9 +8,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoginPage() {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -19,63 +21,108 @@ export default function LoginPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
     setMessage(null);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    if (isSignUp) {
+      // Handle Sign Up
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+          emailRedirectTo: `${location.origin}/auth/callback`,
+        },
+      });
 
-    if (error) {
-      setError(error.message);
-      setIsLoading(false);
+      if (error) {
+        setError(error.message);
+      } else {
+        // If email confirmation is off, Supabase might return a session immediately.
+        if (data.session) {
+          router.push('/dashboard/profile');
+          router.refresh();
+        } else {
+          setMessage("Registration successful! Please check your email to confirm your account.");
+          // Clear form
+          setFullName('');
+          setPassword('');
+          // Switch back to login so they can log in after confirming
+          setIsSignUp(false);
+        }
+      }
     } else {
-      router.push('/dashboard');
-      router.refresh();
+      // Handle Sign In
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setError(error.message);
+      } else {
+        router.push('/dashboard');
+        router.refresh();
+      }
     }
-  };
-
-  const handleSignUp = async () => {
-    setIsLoading(true);
-    setError(null);
-    setMessage(null);
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      setError(error.message);
-    } else {
-      setMessage("Registration successful! You can now log in.");
-    }
+    
     setIsLoading(false);
   };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-background p-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-background to-background" />
-      
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="z-10 w-full max-w-md">
-        <Card className="bg-white/5 border-white/10 backdrop-blur-xl">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        className="z-10 w-full max-w-md"
+      >
+        <Card className="bg-card border shadow-sm">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold tracking-tight text-center">Welcome back</CardTitle>
+            <CardTitle className="text-2xl font-bold tracking-tight text-center">
+              {isSignUp ? 'Create an account' : 'Welcome back'}
+            </CardTitle>
             <CardDescription className="text-center text-muted-foreground">
-              Enter your email and password to access your SchemePilot account
+              {isSignUp 
+                ? 'Enter your details to create your SchemePilot account' 
+                : 'Enter your email and password to access your account'
+              }
             </CardDescription>
           </CardHeader>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleAuth}>
             <CardContent className="space-y-4">
-              {error && <div className="p-3 text-sm bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg">{error}</div>}
-              {message && <div className="p-3 text-sm bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg">{message}</div>}
+              <AnimatePresence mode="wait">
+                {error && (
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="p-3 text-sm bg-destructive/10 border border-destructive/20 text-destructive rounded-lg">
+                    {error}
+                  </motion.div>
+                )}
+                {message && (
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="p-3 text-sm bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 rounded-lg">
+                    {message}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {isSignUp && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
+                  <Input 
+                    id="fullName" 
+                    type="text" 
+                    placeholder="John Doe" 
+                    required={isSignUp} 
+                    className="bg-background"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                </motion.div>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input 
@@ -83,7 +130,7 @@ export default function LoginPage() {
                   type="email" 
                   placeholder="m@example.com" 
                   required 
-                  className="bg-white/5 border-white/10"
+                  className="bg-background"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -94,20 +141,29 @@ export default function LoginPage() {
                   id="password" 
                   type="password" 
                   required 
-                  className="bg-white/5 border-white/10"
+                  className="bg-background"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white" disabled={isLoading}>
-                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Sign In"}
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={isLoading}>
+                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : (isSignUp ? "Sign Up" : "Sign In")}
               </Button>
               <div className="text-sm text-center text-muted-foreground">
-                Don't have an account?{" "}
-                <button type="button" onClick={handleSignUp} className="text-indigo-400 hover:underline hover:text-indigo-300 font-medium" disabled={isLoading}>
-                  Sign up
+                {isSignUp ? "Already have an account? " : "Don't have an account? "}
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setIsSignUp(!isSignUp);
+                    setError(null);
+                    setMessage(null);
+                  }} 
+                  className="text-primary hover:underline font-medium" 
+                  disabled={isLoading}
+                >
+                  {isSignUp ? "Sign in" : "Sign up"}
                 </button>
               </div>
             </CardFooter>
