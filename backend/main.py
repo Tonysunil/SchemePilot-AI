@@ -263,6 +263,11 @@ The user has the following profile:
 Evaluate the user's eligibility against these specific schemes:
 {context}
 
+CRITICAL RULES:
+1. STRICT NUMERICAL CHECKING: If a scheme requires a minimum age (e.g., 60 years for a pension), and the user's age is less than that, they are STRICTLY INELIGIBLE. Do not recommend it.
+2. INCOME LIMITS: If a scheme has an income cap (e.g., < ₹2,00,000), compare it strictly against the user's annual_income.
+3. If the user's profile directly contradicts a core requirement (e.g., Student vs Farmer), they are INELIGIBLE.
+
 Respond STRICTLY with valid JSON. Do not use Markdown block syntax (```json). Just the raw JSON object.
 Format:
 {{
