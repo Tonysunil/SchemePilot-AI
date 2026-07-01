@@ -93,8 +93,11 @@ def search_node(state: AgentState):
     context = "\n\n".join([doc.page_content for doc in docs])
 
     profile_ctx = ""
+    name_ctx = ""
     if state.get("user_profile"):
         profile_ctx = f"CRITICAL: The user has a saved profile. Use these details strictly to evaluate eligibility. DO NOT ask them for this information again:\n{json.dumps(state['user_profile'], indent=2)}\n"
+        if state["user_profile"].get("full_name"):
+            name_ctx = f"The user's name is {state['user_profile']['full_name']}. Address them by their name occasionally to be personal and polite."
 
     lang_ctx = f"CRITICAL RULE: You MUST reply entirely in the language corresponding to this language code: '{state.get('language', 'en')}'. Do not use English unless the code is 'en'."
 
@@ -104,6 +107,7 @@ def search_node(state: AgentState):
     {hist_str}
     
     The user asked: {state['input']}. 
+    {name_ctx}
     {profile_ctx}
     {lang_ctx}
     Use the following relevant schemes data to answer their question clearly and concisely. Format nicely with markdown. Tell them explicitly if they are eligible based on their profile.
@@ -118,6 +122,9 @@ def compare_node(state: AgentState):
     context = "\n\n".join([doc.page_content for doc in docs])
 
     lang_ctx = f"CRITICAL RULE: You MUST reply entirely in the language corresponding to this language code: '{state.get('language', 'en')}'. Do not use English unless the code is 'en'."
+    name_ctx = ""
+    if state.get("user_profile") and state["user_profile"].get("full_name"):
+        name_ctx = f"The user's name is {state['user_profile']['full_name']}. Address them by their name occasionally."
 
     hist_str = "\n".join([f"{msg['role']}: {msg['content']}" for msg in state.get('history', [])[-4:]])
     prompt = f"""You are SchemePilot AI. 
@@ -125,6 +132,7 @@ def compare_node(state: AgentState):
     {hist_str}
     
     The user asked to compare schemes: {state['input']}.
+    {name_ctx}
     {lang_ctx}
     Use the following relevant data to create a detailed Markdown comparison table.
     Data: {context}"""
@@ -138,6 +146,9 @@ def plan_node(state: AgentState):
     context = "\n\n".join([doc.page_content for doc in docs])
 
     lang_ctx = f"CRITICAL RULE: You MUST reply entirely in the language corresponding to this language code: '{state.get('language', 'en')}'. Do not use English unless the code is 'en'."
+    name_ctx = ""
+    if state.get("user_profile") and state["user_profile"].get("full_name"):
+        name_ctx = f"The user's name is {state['user_profile']['full_name']}. Address them by their name occasionally."
 
     hist_str = "\n".join([f"{msg['role']}: {msg['content']}" for msg in state.get('history', [])[-4:]])
     prompt = f"""You are SchemePilot AI. 
@@ -145,6 +156,7 @@ def plan_node(state: AgentState):
     {hist_str}
     
     The user asked how to apply for a scheme: {state['input']}.
+    {name_ctx}
     {lang_ctx}
     Provide a step-by-step markdown checklist with estimated timelines based on typical Indian government processes using the provided context.
     Data: {context}"""

@@ -39,8 +39,25 @@ export default function ChatPage() {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
+        let name = user?.user_metadata?.full_name;
+        if (!name && user?.email) {
+          const emailPrefix = user.email.split('@')[0];
+          const match = emailPrefix.match(/[a-zA-Z]+/);
+          name = match ? match[0] : emailPrefix;
+          name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+        }
+        
         const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-        if (data) setUserProfile(data);
+        setUserProfile({ ...(data || {}), full_name: name });
+        
+        // Update greeting message
+        setMessages(prev => {
+          const newMsgs = [...prev];
+          if (newMsgs[0].id === '1' && name) {
+            newMsgs[0].content = `Namaste, ${name}! I am SchemePilot AI. I can help you find government schemes you are eligible for. Tell me a bit about yourself (e.g., your state, occupation, age, and family income).`;
+          }
+          return newMsgs;
+        });
       }
     }
     loadProfile();
