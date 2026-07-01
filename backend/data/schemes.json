@@ -3,10 +3,14 @@
     "id": "scheme_1",
     "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
     "category": "Agriculture",
-    "description": "An initiative by the government of India in which all farmers will get up to ₹6,000 per year as minimum income support.",
+    "description": "An initiative by the government of India in which all farmers will get up to \u20b96,000 per year as minimum income support.",
     "eligibility": "All landholding farmers' families, which have cultivable landholding in their names.",
-    "benefits": "₹6,000 per year payable in three equal installments of ₹2,000 each.",
-    "required_documents": ["Aadhaar Card", "Bank Account Details", "Land Holding Documents"],
+    "benefits": "\u20b96,000 per year payable in three equal installments of \u20b92,000 each.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Bank Account Details",
+      "Land Holding Documents"
+    ],
     "income_limit": null,
     "state": "All India",
     "application_process": "Register on the PM-KISAN portal or through local Patwari/Revenue Officer.",
@@ -20,7 +24,13 @@
     "description": "Financial assistance to students studying at post matriculation or post-secondary stage to enable them to complete their education.",
     "eligibility": "Students belonging to SC/ST/OBC categories studying in Class 11 and above. Must be a resident of the respective state.",
     "benefits": "Maintenance allowance, reimbursement of compulsory non-refundable fees, study tour charges, thesis typing/printing charges for Research Scholars.",
-    "required_documents": ["Caste Certificate", "Income Certificate", "Previous Year Marksheet", "Fee Receipt", "Bank Passbook"],
+    "required_documents": [
+      "Caste Certificate",
+      "Income Certificate",
+      "Previous Year Marksheet",
+      "Fee Receipt",
+      "Bank Passbook"
+    ],
     "income_limit": 250000,
     "state": "State Specific (e.g., Andhra Pradesh, Maharashtra)",
     "application_process": "Apply online through the State Scholarship Portal or National Scholarship Portal (NSP).",
@@ -31,10 +41,15 @@
     "id": "scheme_3",
     "name": "Pradhan Mantri Mudra Yojana (PMMY)",
     "category": "Entrepreneurship",
-    "description": "A scheme to provide loans up to ₹10 lakh to the non-corporate, non-farm small/micro enterprises.",
+    "description": "A scheme to provide loans up to \u20b910 lakh to the non-corporate, non-farm small/micro enterprises.",
     "eligibility": "Any Indian Citizen who has a business plan for a non-farm sector income generating activity such as manufacturing, processing, trading or service sector.",
-    "benefits": "Loans classified into three categories: Shishu (up to ₹50,000), Kishore (₹50,000 to ₹5 lakh), Tarun (₹5 lakh to ₹10 lakh).",
-    "required_documents": ["Identity Proof", "Address Proof", "Business Plan", "Recent Photographs"],
+    "benefits": "Loans classified into three categories: Shishu (up to \u20b950,000), Kishore (\u20b950,000 to \u20b95 lakh), Tarun (\u20b95 lakh to \u20b910 lakh).",
+    "required_documents": [
+      "Identity Proof",
+      "Address Proof",
+      "Business Plan",
+      "Recent Photographs"
+    ],
     "income_limit": null,
     "state": "All India",
     "application_process": "Apply at any Bank, NBFC, or Micro Finance Institution.",
@@ -47,8 +62,12 @@
     "category": "Healthcare",
     "description": "The world's largest health insurance scheme providing a health cover of Rs. 5 lakhs per family per year for secondary and tertiary care hospitalization.",
     "eligibility": "Poor, deprived rural families and identified occupational category of urban workers' families as per the latest Socio-Economic Caste Census (SECC) data.",
-    "benefits": "Health cover of ₹5,00,000 per family per year for inpatient secondary and tertiary care.",
-    "required_documents": ["Aadhaar Card", "Ration Card", "PMJAY Golden Card"],
+    "benefits": "Health cover of \u20b95,00,000 per family per year for inpatient secondary and tertiary care.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Ration Card",
+      "PMJAY Golden Card"
+    ],
     "income_limit": 100000,
     "state": "All India",
     "application_process": "Check eligibility online and get the Golden Card at empaneled hospitals or Common Service Centers (CSCs).",
@@ -61,8 +80,13 @@
     "category": "Entrepreneurship",
     "description": "Facilitates bank loans between 10 lakh and 1 Crore to at least one SC/ST borrower and at least one woman borrower per bank branch for setting up a greenfield enterprise.",
     "eligibility": "SC/ST and/or woman entrepreneurs, above 18 years of age. The enterprise must be a greenfield (first time) venture.",
-    "benefits": "Composite loan (inclusive of term loan and working capital) between ₹10 lakh and ₹100 lakh.",
-    "required_documents": ["Aadhaar Card", "Caste Certificate (if applicable)", "Business Plan", "Project Report"],
+    "benefits": "Composite loan (inclusive of term loan and working capital) between \u20b910 lakh and \u20b9100 lakh.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Caste Certificate (if applicable)",
+      "Business Plan",
+      "Project Report"
+    ],
     "income_limit": null,
     "state": "All India",
     "application_process": "Apply directly at a bank branch, through SIDBI's Stand-Up India portal, or via Lead District Manager.",
@@ -76,7 +100,11 @@
     "description": "A government-backed savings scheme targeted at the parents of girl children, encouraging them to build a fund for the future education and marriage of their female child.",
     "eligibility": "Parents or legal guardians of a girl child up to 10 years of age.",
     "benefits": "High interest rate (subject to quarterly revision) and tax benefits under Section 80C. Maturity after 21 years.",
-    "required_documents": ["Birth Certificate of Girl Child", "Identity Proof of Parent", "Address Proof of Parent"],
+    "required_documents": [
+      "Birth Certificate of Girl Child",
+      "Identity Proof of Parent",
+      "Address Proof of Parent"
+    ],
     "income_limit": null,
     "state": "All India",
     "application_process": "Open an account at any post office or authorized commercial bank.",
@@ -89,8 +117,13 @@
     "category": "Housing",
     "description": "Aims to provide a pucca house with basic amenities to all houseless households and those living in kutcha and dilapidated houses in rural areas.",
     "eligibility": "Houseless families or those living in zero, one, or two-room kutcha houses in rural areas, as per SECC 2011 data.",
-    "benefits": "Financial assistance of ₹1.20 lakh in plain areas and ₹1.30 lakh in hilly/difficult areas for house construction.",
-    "required_documents": ["Aadhaar Card", "Job Card (MGNREGA)", "Bank Account Details", "Swachh Bharat Mission Number"],
+    "benefits": "Financial assistance of \u20b91.20 lakh in plain areas and \u20b91.30 lakh in hilly/difficult areas for house construction.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Job Card (MGNREGA)",
+      "Bank Account Details",
+      "Swachh Bharat Mission Number"
+    ],
     "income_limit": null,
     "state": "All India (Rural)",
     "application_process": "Beneficiaries are selected by Gram Sabhas based on SECC data. Registration is done through the AwaasApp or local Panchayat.",
@@ -103,8 +136,11 @@
     "category": "Pension",
     "description": "A pension scheme primarily focused on the unorganized sector workers, providing a guaranteed minimum pension.",
     "eligibility": "All Indian citizens between 18 and 40 years of age who have a savings bank account.",
-    "benefits": "Guaranteed minimum monthly pension ranging from ₹1,000 to ₹5,000 after attaining 60 years of age, depending on contributions.",
-    "required_documents": ["Aadhaar Card", "Bank Account Details"],
+    "benefits": "Guaranteed minimum monthly pension ranging from \u20b91,000 to \u20b95,000 after attaining 60 years of age, depending on contributions.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Bank Account Details"
+    ],
     "income_limit": null,
     "state": "All India",
     "application_process": "Apply through any bank or post office where you hold a savings account.",
@@ -116,9 +152,14 @@
     "name": "National Means-cum-Merit Scholarship (NMMS)",
     "category": "Education",
     "description": "Awards scholarships to meritorious students of economically weaker sections to arrest their drop out at class VIII.",
-    "eligibility": "Students studying in class VIII who have secured minimum 55% marks in class VII. Parental income should not exceed ₹3,50,000 per annum.",
-    "benefits": "Scholarship of ₹12,000 per annum (₹1000 per month) from Class IX to XII.",
-    "required_documents": ["Income Certificate", "Caste Certificate", "Class VII Marksheet", "Disability Certificate (if applicable)"],
+    "eligibility": "Students studying in class VIII who have secured minimum 55% marks in class VII. Parental income should not exceed \u20b93,50,000 per annum.",
+    "benefits": "Scholarship of \u20b912,000 per annum (\u20b91000 per month) from Class IX to XII.",
+    "required_documents": [
+      "Income Certificate",
+      "Caste Certificate",
+      "Class VII Marksheet",
+      "Disability Certificate (if applicable)"
+    ],
     "income_limit": 350000,
     "state": "All India",
     "application_process": "Apply online through the National Scholarship Portal (NSP) and pass the selection test conducted by State Govts.",
@@ -131,12 +172,143 @@
     "category": "Skill Development",
     "description": "A central sector scheme to support traditional artisans and craftspeople of rural and urban India.",
     "eligibility": "An artisan or craftsperson working with hands and tools in one of the 18 family-based traditional trades (e.g., Carpenter, Blacksmith, Goldsmith). Minimum age 18 years.",
-    "benefits": "PM Vishwakarma Certificate & ID card, Skill Upgradation training, Toolkit Incentive of ₹15,000, Collateral-free Credit Support up to ₹3 lakh.",
-    "required_documents": ["Aadhaar Card", "Bank Account Details", "Ration Card"],
+    "benefits": "PM Vishwakarma Certificate & ID card, Skill Upgradation training, Toolkit Incentive of \u20b915,000, Collateral-free Credit Support up to \u20b93 lakh.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Bank Account Details",
+      "Ration Card"
+    ],
     "income_limit": null,
     "state": "All India",
     "application_process": "Enrollment through Common Service Centres (CSCs) and validation by Gram Panchayat and District Implementation Committee.",
     "official_website": "https://pmvishwakarma.gov.in/",
     "source_url": "https://pmvishwakarma.gov.in/"
+  },
+  {
+    "id": "scheme_ayushman",
+    "name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (PM-JAY)",
+    "category": "Healthcare",
+    "description": "The world's largest health insurance scheme fully financed by the government, providing a cover of Rs. 5 lakhs per family per year for secondary and tertiary care hospitalization.",
+    "eligibility": "Poor and vulnerable families based on Socio-Economic Caste Census (SECC) database.",
+    "benefits": "Cashless and paperless access to services at empanelled hospitals up to Rs. 5 lakhs.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Ration Card",
+      "PMJAY e-Card"
+    ],
+    "income_limit": null,
+    "state": "All India",
+    "application_process": "Check eligibility online or at a CSC, and generate e-card at empanelled hospitals.",
+    "official_website": "https://pmjay.gov.in/",
+    "source_url": "https://pmjay.gov.in/"
+  },
+  {
+    "id": "scheme_pmay",
+    "name": "Pradhan Mantri Awas Yojana (PMAY)",
+    "category": "Housing",
+    "description": "An initiative to provide affordable housing for all in urban and rural areas.",
+    "eligibility": "Economically Weaker Section (EWS), Low Income Group (LIG) and Middle Income Group (MIG) families who do not own a pucca house.",
+    "benefits": "Credit linked subsidy on home loans, financial assistance for house construction/enhancement.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Income Certificate",
+      "Address Proof",
+      "Bank Account Details"
+    ],
+    "income_limit": 1800000,
+    "state": "All India",
+    "application_process": "Apply online through PMAY portal or via Common Service Centres (CSC).",
+    "official_website": "https://pmaymis.gov.in/",
+    "source_url": "https://pmaymis.gov.in/"
+  },
+  {
+    "id": "scheme_pmuy",
+    "name": "Pradhan Mantri Ujjwala Yojana (PMUY)",
+    "category": "Social Welfare",
+    "description": "A scheme to provide clean cooking fuel to poor households by distributing deposit-free LPG connections to women from BPL families.",
+    "eligibility": "Adult woman belonging to a BPL family, with no existing LPG connection in the household.",
+    "benefits": "Financial assistance of Rs. 1600 per connection, plus free first refill and hotplate.",
+    "required_documents": [
+      "Aadhaar Card",
+      "BPL Ration Card",
+      "Bank Passbook",
+      "Passport Size Photo"
+    ],
+    "income_limit": null,
+    "state": "All India",
+    "application_process": "Apply by filling the form at the nearest LPG distributor.",
+    "official_website": "https://www.pmuy.gov.in/",
+    "source_url": "https://www.pmuy.gov.in/"
+  },
+  {
+    "id": "scheme_apy",
+    "name": "Atal Pension Yojana (APY)",
+    "category": "Pension",
+    "description": "A pension scheme for citizens of India focused on the unorganized sector workers, guaranteeing a minimum monthly pension.",
+    "eligibility": "Any citizen of India between 18-40 years of age with a savings bank account.",
+    "benefits": "Guaranteed minimum monthly pension ranging from Rs. 1000 to Rs. 5000 after the age of 60 years.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Bank Account Details"
+    ],
+    "income_limit": null,
+    "state": "All India",
+    "application_process": "Apply through the bank or post office where the savings account is held.",
+    "official_website": "https://npscra.nsdl.co.in/scheme-details.php",
+    "source_url": "https://npscra.nsdl.co.in/"
+  },
+  {
+    "id": "scheme_ssy",
+    "name": "Sukanya Samriddhi Yojana (SSY)",
+    "category": "Women Empowerment",
+    "description": "A government-backed savings scheme targeted at the parents of girl children, to build a fund for her future education and marriage expenses.",
+    "eligibility": "Parents or legal guardians of a girl child below 10 years of age.",
+    "benefits": "High interest rate, tax benefits under section 80C, and a maturity period of 21 years.",
+    "required_documents": [
+      "Birth Certificate of the girl child",
+      "Identity Proof of Parent",
+      "Address Proof"
+    ],
+    "income_limit": null,
+    "state": "All India",
+    "application_process": "Open an account at any post office or authorized commercial bank.",
+    "official_website": "https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx",
+    "source_url": "https://www.indiapost.gov.in/"
+  },
+  {
+    "id": "scheme_mgnrega",
+    "name": "Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA)",
+    "category": "Employment",
+    "description": "A scheme that guarantees 100 days of wage employment in a financial year to a rural household whose adult members volunteer to do unskilled manual work.",
+    "eligibility": "Any rural household whose adult members are willing to do unskilled manual work.",
+    "benefits": "Guaranteed 100 days of employment; unemployment allowance if work is not provided within 15 days.",
+    "required_documents": [
+      "Aadhaar Card",
+      "Job Card",
+      "Bank Account Details"
+    ],
+    "income_limit": null,
+    "state": "All India (Rural)",
+    "application_process": "Register at the local Gram Panchayat to obtain a Job Card.",
+    "official_website": "https://nrega.nic.in/",
+    "source_url": "https://nrega.nic.in/"
+  },
+  {
+    "id": "scheme_standup",
+    "name": "Stand-Up India Scheme",
+    "category": "Entrepreneurship",
+    "description": "Facilitates bank loans between 10 lakh and 1 Crore to at least one Scheduled Caste (SC) or Scheduled Tribe (ST) borrower and at least one woman borrower per bank branch for setting up a greenfield enterprise.",
+    "eligibility": "SC/ST and/or women entrepreneurs, above 18 years of age.",
+    "benefits": "Bank loans from Rs. 10 Lakh to Rs. 1 Crore for setting up new enterprises in manufacturing, services, or trading sector.",
+    "required_documents": [
+      "Identity Proof",
+      "Caste Certificate (if applicable)",
+      "Project Report/Business Plan"
+    ],
+    "income_limit": null,
+    "state": "All India",
+    "application_process": "Apply through the Stand-Up India portal, through the lead district manager, or directly at a bank branch.",
+    "official_website": "https://www.standupmitra.in/",
+    "source_url": "https://www.standupmitra.in/"
   }
 ]
