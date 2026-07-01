@@ -235,7 +235,7 @@ export function ProfileFormClient({ profile }: { profile: any }) {
                     <span className="bg-emerald-500/20 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center text-sm mr-2">B</span>
                     {role} Details
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-xl bg-black/20 border border-white/5">
+                  <div key={role} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-xl bg-black/20 border border-white/5">
                     {renderDynamicFields()}
                   </div>
                 </div>
