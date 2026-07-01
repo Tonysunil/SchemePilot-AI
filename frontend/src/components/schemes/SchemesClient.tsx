@@ -10,6 +10,43 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { saveScheme } from '@/app/actions/dashboard';
+import { Bookmark, Loader2 } from 'lucide-react';
+
+function SaveSchemeButton({ schemeTitle, category }: { schemeTitle: string, category?: string }) {
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSave = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isSaved) return;
+    
+    setIsSaving(true);
+    const res = await saveScheme(schemeTitle, category);
+    setIsSaving(false);
+    
+    if (res?.error) {
+      alert(res.error);
+    } else {
+      setIsSaved(true);
+    }
+  };
+
+  return (
+    <Button 
+      variant="ghost" 
+      size="icon" 
+      onClick={handleSave}
+      disabled={isSaving || isSaved}
+      className={cn("h-8 w-8 rounded-full border border-white/5", isSaved ? "text-indigo-400 bg-indigo-500/10" : "text-muted-foreground hover:text-indigo-300 hover:bg-white/10")}
+    >
+      {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : 
+       isSaved ? <Bookmark className="w-4 h-4 fill-current" /> : 
+       <Bookmark className="w-4 h-4" />}
+    </Button>
+  );
+}
 
 export function SchemesClient({ schemes }: { schemes: any[] }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,12 +92,15 @@ export function SchemesClient({ schemes }: { schemes: any[] }) {
               <Card className="h-full flex flex-col bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors rounded-2xl">
                 <CardHeader>
                   <div className="flex justify-between items-start mb-3 gap-2 flex-wrap">
-                    <Badge variant="secondary" className="bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30">
-                      {scheme.category || 'General'}
-                    </Badge>
-                    <Badge variant="outline" className="border-white/20 text-muted-foreground">
-                      {scheme.state || 'All India'}
-                    </Badge>
+                    <div className="flex gap-2">
+                      <Badge variant="secondary" className="bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30">
+                        {scheme.category || 'General'}
+                      </Badge>
+                      <Badge variant="outline" className="border-white/20 text-muted-foreground">
+                        {scheme.state || 'All India'}
+                      </Badge>
+                    </div>
+                    <SaveSchemeButton schemeTitle={scheme.name} category={scheme.category} />
                   </div>
                   <CardTitle className="text-xl leading-tight">{scheme.name}</CardTitle>
                 </CardHeader>
